@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora P2P con Comisiones</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 450px; margin: 40px auto; padding: 20px; background-color: #f4f6f9; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { text-align: center; margin-bottom: 25px; color: #1e3a8a; font-size: 1.6em; }
+        .campo { margin-bottom: 25px; display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 8px; color: #4b5563; font-size: 0.95em; }
+        .input-group { display: flex; align-items: center; }
+        input[type="number"] { flex: 1; padding: 12px; font-size: 1.2em; border: 2px solid #e5e7eb; border-radius: 8px; text-align: right; font-weight: bold; }
+        input[type="number"]:focus { border-color: #3b82f6; outline: none; }
+        .badge { background: #f3f4f6; padding: 12px; min-width: 80px; text-align: center; font-weight: bold; border-radius: 0 8px 8px 0; border: 2px solid #e5e7eb; border-left: none; color: #4b5563; font-size: 0.9em; }
+        input { border-top-right-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+        .info-comision { font-size: 0.8em; color: #dd6b20; margin-top: 4px; font-weight: 500; }
+        p.help { font-size: 0.85em; color: #6b7280; text-align: center; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Calculadora de Flujo ⚡</h2>
+
+    <div class="campo">
+        <label for="usdBdv">USD en BDV</label>
+        <div class="input-group">
+            <input type="number" id="usdBdv" oninput="calcularDesdeUSD()" placeholder="0.00" step="any">
+            <div class="badge">USD (1)</div>
+        </div>
+    </div>
+
+    <div class="campo">
+        <label for="montoBinance">Monto a colocar en Binance</label>
+        <div class="input-group">
+            <input type="number" id="montoBinance" oninput="calcularDesdeBinance()" placeholder="0.00" step="any">
+            <div class="badge">USD (2)</div>
+        </div>
+        <span class="info-comision">Descuento aplicado: -2.5%</span>
+    </div>
+
+    <div class="campo">
+        <label for="montoUsdt">Monto a recibir en USDT</label>
+        <div class="input-group">
+            <input type="number" id="montoUsdt" oninput="calcularDesdeUsdt()" placeholder="0.00" step="any">
+            <div class="badge">USDT (3)</div>
+        </div>
+        <span class="info-comision">Comisión incluida: +3.6%</span>
+    </div>
+
+    <p class="help">Escribe en cualquier casilla. El sistema recalcula el flujo completo al instante.</p>
+</div>
+
+<script>
+    const usdBdv = document.getElementById('usdBdv');
+    const montoBinance = document.getElementById('montoBinance');
+    const montoUsdt = document.getElementById('montoUsdt');
+
+    // Constantes matemáticas fijas para las comisiones
+    const descBinance = 0.975; // Representa el 100% - 2.5%
+    const comUsdt = 1.036;     // Representa el 100% + 3.6%
+
+    // 1. Si el usuario escribe en "USD en BDV"
+    function calcularDesdeUSD() {
+        const val = parseFloat(usdBdv.value);
+        if (isNaN(val)) { montoBinance.value = ''; montoUsdt.value = ''; return; }
+
+        const enBinance = val * descBinance;
+        montoBinance.value = enBinance.toFixed(2);
+        montoUsdt.value = (enBinance * comUsdt).toFixed(2);
+    }
+
+    // 2. Si el usuario escribe en "Monto a colocar en Binance"
+    function calcularDesdeBinance() {
+        const val = parseFloat(montoBinance.value);
+        if (isNaN(val)) { usdBdv.value = ''; montoUsdt.value = ''; return; }
+
+        usdBdv.value = (val / descBinance).toFixed(2);
+        montoUsdt.value = (val * comUsdt).toFixed(2);
+    }
+
+    // 3. Si el usuario escribe en "Monto a recibir en USDT"
+    function calcularDesdeUsdt() {
+        const val = parseFloat(montoUsdt.value);
+        if (isNaN(val)) { usdBdv.value = ''; montoBinance.value = ''; return; }
+
+        const enBinance = val / comUsdt;
+        montoBinance.value = enBinance.toFixed(2);
+        usdBdv.value = (enBinance / descBinance).toFixed(2);
+    }
+</script>
+
+</body>
+</html>
