@@ -45,6 +45,16 @@
         .tooltip::after { content: attr(data-texto); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.8em; font-weight: normal; white-space: normal; width: 200px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; text-align: center; z-index: 10; }
         .tooltip::before { content: ""; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; opacity: 0; transition: opacity 0.2s ease; z-index: 10; }
         .tooltip:hover::after, .tooltip:hover::before { opacity: 1; }
+
+        /* Estilo para el campo automático bloqueado */
+        .campo-bloqueado {
+        background-color: #f1f5f9 !important; /* Gris claro suave */
+        border-color: #e2e8f0; }
+
+        .campo-bloqueado input[readonly] {
+        color: #64748b; /* Texto un poco más oscuro/opaco */
+        cursor: not-allowed; /* Cursor de "bloqueado" al pasar el mouse */ }
+        
     </style>
 </head>
 <body>
@@ -68,8 +78,8 @@
             BPAY/GPAY
             <span class="tooltip" data-texto="Monto a colocar en Binance para evitar error de saldo insuficiente.">❓</span>
         </label>
-        <div class="input-group">
-            <input type="number" id="montoBinance" oninput="calcularDesdeBinance()" placeholder="0.00" step="any">
+        <div class="input-group campo-bloqueado">
+            <input type="number" id="montoBinance" placeholder="0.00" step="any" readonly>
             <div class="badge">USD</div>
         </div>
         <span class="info-comision">Comisión: -2.5%</span>
