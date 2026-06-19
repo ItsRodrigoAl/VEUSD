@@ -47,6 +47,24 @@ input[type="number"] {
 
 .info-comision { font-size: 0.8em; color: #dd6b20; margin-top: 4px; font-weight: 500; }
 p.help { font-size: 0.85em; color: #6b7280; text-align: center; margin-top: 20px; }
+        /* Sección de Preguntas Frecuentes */
+.faq-section { margin-top: 35px; border-top: 1px solid #e5e7eb; padding-top: 25px; text-align: left; }
+.faq-section h3 { color: #1e3a8a; margin-bottom: 20px; font-size: 1.3em; font-weight: bold; text-align: left; }
+
+/* El contenedor de cada pregunta (Acordeón) */
+details { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; padding: 14px; cursor: pointer; transition: background 0.2s; }
+details:hover { background: #f8fafc; }
+
+/* El título de la pregunta (lo que se toca) */
+summary { font-weight: 600; color: #374151; font-size: 0.95em; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+summary::-webkit-details-marker { display: none; } /* Quita la flecha del sistema */
+
+/* Flecha personalizada que gira al abrir */
+summary::after { content: '➔'; font-size: 0.8em; color: #9ca3af; transition: transform 0.2s; }
+details[open] summary::after { transform: rotate(90deg); color: #3b82f6; }
+
+/* El texto interior que se esconde/muestra */
+details p { margin-top: 10px; font-size: 0.9em; color: #6b7280; line-height: 1.5; margin-bottom: 0; }
     </style>
 </head>
 <body>
@@ -81,6 +99,25 @@ p.help { font-size: 0.85em; color: #6b7280; text-align: center; margin-top: 20px
     </div>
 
     <p class="help">E+ deja de publicar tanta noticia chimba, grax</p>
+    <!-- SECCIÓN DE PREGUNTAS FRECUENTES -->
+    <div class="faq-section">
+        <h3>Preguntas frecuentes</h3>
+
+        <details>
+            <summary>Pregunta 1</summary>
+            <p>Texto 1</p>
+        </details>
+
+        <details>
+            <summary>Pregunta 2</summary>
+            <p>Texto 2</p>
+        </details>
+
+        <details>
+            <summary>Pregunta 3</summary>
+            <p>Texto 3</p>
+        </details>
+    </div>
 </div>
 
 <script>
