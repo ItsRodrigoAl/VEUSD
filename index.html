@@ -3,144 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora BDV BPAY</title>
+    <title>Calculadora Intervenciones</title>
     <style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 450px; margin: 40px auto; padding: 20px; background-color: #f4f6f9; color: #333; }
-.card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-h2 { text-align: center; margin-bottom: 25px; color: #1e3a8a; font-size: 1.6em; }
-.campo { margin-bottom: 25px; display: flex; flex-direction: column; }
-label { font-weight: 600; margin-bottom: 8px; color: #4b5563; font-size: 0.95em; }
+        /* Estilos Generales */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 450px; margin: 40px auto; padding: 20px; background-color: #f4f6f9; color: #333; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { text-align: center; margin-bottom: 25px; color: #1e3a8a; font-size: 1.6em; }
+        
+        /* Campos de Entrada */
+        .campo { margin-bottom: 25px; display: flex; flex-direction: column; }
+        label { font-weight: 600; margin-bottom: 8px; color: #4b5563; font-size: 0.95em; display: flex; align-items: center; gap: 6px; }
+        
+        .input-group { display: flex; align-items: center; border: 2px solid #e5e7eb; border-radius: 8px; background: white; overflow: hidden; }
+        .input-group:focus-within { border-color: #3b82f6; }
+        
+        input[type="number"] { flex: 1; padding: 12px; font-size: 1.2em; border: none; outline: none; text-align: left; font-weight: bold; background: transparent; width: 100%; }
+        .badge { padding: 12px; font-weight: bold; color: #9ca3af; font-size: 0.95em; user-select: none; background: transparent; }
+        .info-comision { font-size: 0.8em; color: #dd6b20; margin-top: 4px; font-weight: 500; }
+        p.help { font-size: 0.85em; color: #6b7280; text-align: center; margin-top: 20px; }
 
-/* ESTE ES EL TRUCO: El contenedor ahora simula ser el input */
-.input-group { 
-    display: flex; 
-    align-items: center; 
-    border: 2px solid #e5e7eb; 
-    border-radius: 8px; 
-    background: white;
-    overflow: hidden;
-}
-.input-group:focus-within { border-color: #3b82f6; } /* Azul al hacer clic */
+        /* Ocultar Flechas de los Inputs de Número */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type=number] { -moz-appearance: textfield; }
 
-/* El input real se vuelve invisible y se alinea a la izquierda */
-input[type="number"] { 
-    flex: 1; 
-    padding: 12px; 
-    font-size: 1.2em; 
-    border: none; 
-    outline: none;
-    text-align: left; /* Monto a la izquierda */
-    font-weight: bold; 
-    background: transparent;
-    width: 100%;
-}
-
-/* El texto de la divisa se queda fijo a la derecha dentro del recuadro */
-.badge { 
-    padding: 12px; 
-    font-weight: bold; 
-    color: #9ca3af; /* Color gris suave de texto secundario */
-    font-size: 0.95em; 
-    user-select: none; /* Evita que se seleccione el texto al hacer doble clic */
-    background: transparent;
-}
-
-.info-comision { font-size: 0.8em; color: #dd6b20; margin-top: 4px; font-weight: 500; }
-p.help { font-size: 0.85em; color: #6b7280; text-align: center; margin-top: 20px; }
         /* Sección de Preguntas Frecuentes */
-.faq-section { margin-top: 35px; border-top: 1px solid #e5e7eb; padding-top: 25px; text-align: left; }
-.faq-section h3 { color: #1e3a8a; margin-bottom: 20px; font-size: 1.3em; font-weight: bold; text-align: left; }
+        .faq-section { margin-top: 35px; border-top: 1px solid #e5e7eb; padding-top: 25px; text-align: left; }
+        .faq-section h3 { color: #1e3a8a; margin-bottom: 20px; font-size: 1.3em; font-weight: bold; text-align: left; }
+        
+        details { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; padding: 14px; cursor: pointer; transition: background 0.2s; }
+        details:hover { background: #f8fafc; }
+        
+        summary { font-weight: 600; color: #374151; font-size: 0.95em; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: '➔'; font-size: 0.8em; color: #9ca3af; transition: transform 0.2s; }
+        details[open] summary::after { transform: rotate(90deg); color: #3b82f6; }
+        details p { margin-top: 10px; font-size: 0.9em; color: #6b7280; line-height: 1.5; margin-bottom: 0; }
 
-/* El contenedor de cada pregunta (Acordeón) */
-details { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; padding: 14px; cursor: pointer; transition: background 0.2s; }
-details:hover { background: #f8fafc; }
-
-/* El título de la pregunta (lo que se toca) */
-summary { font-weight: 600; color: #374151; font-size: 0.95em; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-summary::-webkit-details-marker { display: none; } /* Quita la flecha del sistema */
-
-/* Flecha personalizada que gira al abrir */
-summary::after { content: '➔'; font-size: 0.8em; color: #9ca3af; transition: transform 0.2s; }
-details[open] summary::after { transform: rotate(90deg); color: #3b82f6; }
-
-/* El texto interior que se esconde/muestra */
-details p { margin-top: 10px; font-size: 0.9em; color: #6b7280; line-height: 1.5; margin-bottom: 0; }
-
-        /* Configuración del Tooltip (Signo de interrogación) */
-.campo label { display: flex; align-items: center; gap: 6px; } /* Alinea el título con el emoji */
-
-.tooltip {
-    font-size: 0.85em;
-    cursor: help;
-    position: relative;
-    display: inline-block;
-}
-
-/* El recuadro negro flotante (escondido por defecto) */
-.tooltip::after {
-    content: attr(data-texto); /* Toma el texto del HTML dinámicamente */
-    position: absolute;
-    bottom: 130%; /* Lo posiciona arriba del emoji */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #1e293b; /* Color oscuro elegante */
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 0.8em;
-    font-weight: normal;
-    white-space: normal;
-    width: 200px; /* Ancho máximo de la cajita de ayuda */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    text-align: center;
-    z-index: 10;
-}
-
-/* La pequeña flecha debajo del recuadro flotante */
-.tooltip::before {
-    content: "";
-    position: absolute;
-    bottom: 110%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 5px;
-    border-style: solid;
-    border-color: #1e293b transparent transparent transparent;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 10;
-}
-
-/* Cuando pasas el mouse por encima (o lo tocas), se muestra */
-.tooltip:hover::after, .tooltip:hover::before {
-    opacity: 1;
-}
-        /* Quita las flechas en navegadores basados en Chrome, Safari, Edge y Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Quita las flechas en Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
+        /* Configuración de los Tooltips */
+        .tooltip { font-size: 0.85em; cursor: help; position: relative; display: inline-block; }
+        .tooltip::after { content: attr(data-texto); position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background-color: #1e293b; color: #fff; padding: 8px 12px; border-radius: 6px; font-size: 0.8em; font-weight: normal; white-space: normal; width: 200px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; text-align: center; z-index: 10; }
+        .tooltip::before { content: ""; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; opacity: 0; transition: opacity 0.2s ease; z-index: 10; }
+        .tooltip:hover::after, .tooltip:hover::before { opacity: 1; }
     </style>
 </head>
-
-<!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-    
 <body>
 
 <div class="card">
-    <h2>🧮 Calculadora</h2>
+    <h2>Calculadora Intervenciones</h2>
 
-    <!-- Campo 1 -->
     <div class="campo">
         <label for="usdBdv">
             BDV 
@@ -152,7 +63,6 @@ input[type=number] {
         </div>
     </div>
 
-    <!-- Campo 2 -->
     <div class="campo">
         <label for="montoBinance">
             BPAY/GPAY
@@ -165,7 +75,6 @@ input[type=number] {
         <span class="info-comision">Comisión: -2.5%</span>
     </div>
 
-    <!-- Campo 3 -->
     <div class="campo">
         <label for="montoUsdt">
             Binance
@@ -179,7 +88,7 @@ input[type=number] {
     </div>
 
     <p class="help">E+ deja de publicar tanta noticia chimba, grax</p>
-    <!-- SECCIÓN DE PREGUNTAS FRECUENTES -->
+
     <div class="faq-section">
         <h3>Preguntas frecuentes</h3>
 
@@ -207,7 +116,7 @@ input[type=number] {
 
     // Constantes matemáticas fijas para las comisiones
     const descBinance = 0.975; // Representa el 100% - 2.5%
-    const comUsdt = 0.964;     // Representa el 100% + 3.6%
+    const comUsdt = 0.964;     // Representa el 100% - 3.6%
 
     // 1. Si el usuario escribe en "USD en BDV"
     function calcularDesdeUSD() {
